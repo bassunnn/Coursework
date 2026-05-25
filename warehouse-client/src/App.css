@@ -1,0 +1,359 @@
+.app-shell {
+  width: min(1440px, 100%);
+  margin: 0 auto;
+  padding: 28px;
+}
+
+.topbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.auth-shell {
+  display: grid;
+  gap: 16px;
+  min-height: 100vh;
+  place-items: center;
+}
+
+.auth-panel {
+  width: min(520px, 100%);
+}
+
+.invitation-panel {
+  width: min(520px, 100%);
+}
+
+.auth-form {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+}
+
+.invitation-codes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px;
+}
+
+.invitation-codes button {
+  padding: 8px 10px;
+  font-family: inherit;
+  font-size: 13px;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.status {
+  min-width: 220px;
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  background: var(--panel-muted);
+  text-align: center;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.metric {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.metric span {
+  display: block;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.metric strong {
+  display: block;
+  margin-top: 8px;
+  color: var(--ink);
+  font-size: 28px;
+  line-height: 1.1;
+}
+
+.materials-panel {
+  margin-bottom: 18px;
+}
+
+.materials-preview {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  padding: 18px;
+}
+
+.material-card {
+  display: grid;
+  gap: 5px;
+  min-height: 136px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--field-bg);
+}
+
+.material-card strong,
+.material-card b {
+  color: var(--ink);
+}
+
+.material-card span {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.materials-all {
+  display: grid;
+  gap: 14px;
+  padding: 0 18px 18px;
+}
+
+.materials-all .table-wrap,
+.storage-all .table-wrap {
+  max-height: 420px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.materials-table {
+  min-width: 680px;
+}
+
+.storage-all {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.workspace,
+.reports {
+  display: grid;
+  grid-template-columns: minmax(360px, 0.85fr) minmax(520px, 1.15fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.reports {
+  grid-template-columns: 1.2fr 0.8fr;
+  margin-top: 18px;
+}
+
+.panel {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel-muted);
+}
+
+.panel-heading p {
+  margin-top: 4px;
+  color: var(--muted);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding: 18px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.field span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+input,
+select,
+button {
+  min-height: 40px;
+  border: 1px solid var(--line-strong);
+  border-radius: 7px;
+  font: inherit;
+}
+
+input,
+select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  color: var(--ink);
+  background: var(--field-bg);
+}
+
+button {
+  padding: 8px 14px;
+  color: var(--accent-ink);
+  background: var(--accent);
+  border-color: var(--accent);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.theme-toggle {
+  white-space: nowrap;
+}
+
+.report-actions {
+  display: flex;
+  align-items: end;
+  gap: 10px;
+}
+
+.report-actions .field {
+  min-width: 240px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 760px;
+}
+
+th,
+td {
+  padding: 13px 14px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+  background: var(--panel-muted);
+}
+
+td {
+  color: var(--ink);
+}
+
+.supplier-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding: 18px;
+}
+
+.supplier-card {
+  display: grid;
+  gap: 5px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--field-bg);
+}
+
+.supplier-card strong,
+.supplier-card b {
+  color: var(--ink);
+}
+
+.supplier-card span {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.address-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding: 18px;
+}
+
+@media (max-width: 1100px) {
+  .workspace,
+  .reports,
+  .metrics,
+  .materials-preview {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .app-shell {
+    padding: 16px;
+  }
+
+  .topbar,
+  .panel-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .topbar-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .report-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .report-actions .field {
+    min-width: 0;
+  }
+
+  .form-grid,
+  .supplier-list,
+  .address-grid {
+    grid-template-columns: 1fr;
+  }
+}

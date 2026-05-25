@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "powershell -ExecutionPolicy Bypass -File ./start.ps1",
+    "dev:fast": "powershell -ExecutionPolicy Bypass -File ./start.ps1 -SkipInstall"
+  }
+}

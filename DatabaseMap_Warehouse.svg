@@ -1,0 +1,238 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1100" viewBox="0 0 1800 1100">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#a7b5c8" flood-opacity="0.45"/>
+    </filter>
+    <style>
+      .bg { fill: #eef4fb; }
+      .title { font: 700 30px Arial, sans-serif; fill: #22344d; }
+      .subtitle { font: 500 14px Arial, sans-serif; fill: #66758a; }
+      .table { fill: #ffffff; stroke: #d7e2ef; stroke-width: 1.6; filter: url(#shadow); }
+      .header-text { font: 700 18px Arial, sans-serif; fill: #ffffff; }
+      .schema-text { font: 500 11px Arial, sans-serif; fill: rgba(255,255,255,0.82); }
+      .col { font: 500 13px Consolas, monospace; fill: #25364d; }
+      .type { font: 500 12px Consolas, monospace; fill: #66758a; }
+      .badge { font: 700 9px Arial, sans-serif; fill: #ffffff; }
+      .rowline { stroke: #e7edf5; stroke-width: 1; }
+      .arrow { stroke: #587089; stroke-width: 2.3; fill: none; marker-end: url(#arrow); stroke-linecap: round; stroke-linejoin: round; }
+      .rel-label { font: 600 12px Arial, sans-serif; fill: #587089; }
+      .note-box { fill: #ffffff; stroke: #d7e2ef; stroke-width: 1.6; filter: url(#shadow); }
+      .note-title { font: 700 18px Arial, sans-serif; fill: #22344d; }
+      .note { font: 500 13px Arial, sans-serif; fill: #66758a; }
+      .legend { font: 500 12px Arial, sans-serif; fill: #66758a; }
+    </style>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="4" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,8 L11,4 z" fill="#587089" />
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1800" height="1100" class="bg" />
+  <text x="72" y="72" class="title">warehouse / Database Diagram</text>
+  <text x="72" y="96" class="subtitle">Source: PostgreSQL, migrations + sql schema analysis</text>
+
+  <!-- suppliers -->
+  <g transform="translate(70 150)">
+    <rect x="0" y="0" width="455" height="342" rx="12" ry="12" class="table" />
+    <rect x="0" y="0" width="455" height="48" rx="12" ry="12" fill="#2563eb" />
+    <path d="M0 36 H455 V48 H0 Z" fill="#2563eb" />
+    <text x="18" y="25" class="header-text">suppliers</text>
+    <text x="18" y="41" class="schema-text">warehouse.suppliers</text>
+
+    <text x="20" y="74" class="col">supplier_code</text>
+    <rect x="190" y="62" width="26" height="16" rx="4" fill="#2563eb" /><text x="203" y="74" text-anchor="middle" class="badge">PK</text>
+    <text x="310" y="74" class="type">varchar(20)</text>
+    <line x1="14" y1="86" x2="441" y2="86" class="rowline" />
+
+    <text x="20" y="106" class="col">supplier_name</text>
+    <text x="292" y="106" class="type">varchar(200) NOT NULL</text>
+    <line x1="14" y1="118" x2="441" y2="118" class="rowline" />
+
+    <text x="20" y="138" class="col">inn</text>
+    <rect x="190" y="126" width="26" height="16" rx="4" fill="#0891b2" /><text x="203" y="138" text-anchor="middle" class="badge">UQ</text>
+    <text x="302" y="138" class="type">varchar(12) NOT NULL</text>
+    <line x1="14" y1="150" x2="441" y2="150" class="rowline" />
+
+    <text x="20" y="170" class="col">legal_postal_code</text>
+    <text x="302" y="170" class="type">varchar(10)</text>
+    <line x1="14" y1="182" x2="441" y2="182" class="rowline" />
+
+    <text x="20" y="202" class="col">legal_city / street / house</text>
+    <text x="302" y="202" class="type">varchar NOT NULL</text>
+    <line x1="14" y1="214" x2="441" y2="214" class="rowline" />
+
+    <text x="20" y="234" class="col">bank_postal_code</text>
+    <text x="302" y="234" class="type">varchar(10)</text>
+    <line x1="14" y1="246" x2="441" y2="246" class="rowline" />
+
+    <text x="20" y="266" class="col">bank_city / street / house</text>
+    <text x="302" y="266" class="type">varchar NOT NULL</text>
+    <line x1="14" y1="278" x2="441" y2="278" class="rowline" />
+
+    <text x="20" y="298" class="col">bank_account_number</text>
+    <text x="292" y="298" class="type">varchar(30) NOT NULL</text>
+  </g>
+
+  <!-- materials -->
+  <g transform="translate(650 120)">
+    <rect x="0" y="0" width="430" height="222" rx="12" ry="12" class="table" />
+    <rect x="0" y="0" width="430" height="48" rx="12" ry="12" fill="#0f766e" />
+    <path d="M0 36 H430 V48 H0 Z" fill="#0f766e" />
+    <text x="18" y="25" class="header-text">materials</text>
+    <text x="18" y="41" class="schema-text">warehouse.materials</text>
+
+    <text x="20" y="74" class="col">material_code</text>
+    <rect x="185" y="62" width="26" height="16" rx="4" fill="#0f766e" /><text x="198" y="74" text-anchor="middle" class="badge">PK</text>
+    <text x="290" y="74" class="type">varchar(20)</text>
+    <line x1="14" y1="86" x2="416" y2="86" class="rowline" />
+
+    <text x="20" y="106" class="col">material_class_code</text>
+    <text x="280" y="106" class="type">varchar(20) NOT NULL</text>
+    <line x1="14" y1="118" x2="416" y2="118" class="rowline" />
+
+    <text x="20" y="138" class="col">material_group_code</text>
+    <text x="280" y="138" class="type">varchar(20) NOT NULL</text>
+    <line x1="14" y1="150" x2="416" y2="150" class="rowline" />
+
+    <text x="20" y="170" class="col">material_name</text>
+    <text x="280" y="170" class="type">varchar(200) NOT NULL</text>
+    <line x1="14" y1="182" x2="416" y2="182" class="rowline" />
+
+    <text x="20" y="202" class="col">material_account</text>
+    <text x="280" y="202" class="type">varchar(30) NOT NULL</text>
+  </g>
+
+  <!-- document_types -->
+  <g transform="translate(1260 135)">
+    <rect x="0" y="0" width="420" height="142" rx="12" ry="12" class="table" />
+    <rect x="0" y="0" width="420" height="48" rx="12" ry="12" fill="#7c3aed" />
+    <path d="M0 36 H420 V48 H0 Z" fill="#7c3aed" />
+    <text x="18" y="25" class="header-text">document_types</text>
+    <text x="18" y="41" class="schema-text">warehouse.document_types</text>
+
+    <text x="20" y="74" class="col">document_type_code</text>
+    <rect x="205" y="62" width="26" height="16" rx="4" fill="#7c3aed" /><text x="218" y="74" text-anchor="middle" class="badge">PK</text>
+    <text x="296" y="74" class="type">varchar(20)</text>
+    <line x1="14" y1="86" x2="406" y2="86" class="rowline" />
+
+    <text x="20" y="106" class="col">document_type_name</text>
+    <text x="258" y="106" class="type">varchar(120) NOT NULL</text>
+  </g>
+
+  <!-- measurement_units -->
+  <g transform="translate(670 460)">
+    <rect x="0" y="0" width="430" height="166" rx="12" ry="12" class="table" />
+    <rect x="0" y="0" width="430" height="48" rx="12" ry="12" fill="#0891b2" />
+    <path d="M0 36 H430 V48 H0 Z" fill="#0891b2" />
+    <text x="18" y="25" class="header-text">measurement_units</text>
+    <text x="18" y="41" class="schema-text">warehouse.measurement_units</text>
+
+    <text x="20" y="74" class="col">material_code</text>
+    <rect x="176" y="62" width="34" height="16" rx="4" fill="#0891b2" /><text x="193" y="74" text-anchor="middle" class="badge">PK/FK</text>
+    <text x="286" y="74" class="type">varchar(20)</text>
+    <line x1="14" y1="86" x2="416" y2="86" class="rowline" />
+
+    <text x="20" y="106" class="col">unit_code</text>
+    <rect x="176" y="94" width="26" height="16" rx="4" fill="#0891b2" /><text x="189" y="106" text-anchor="middle" class="badge">PK</text>
+    <text x="286" y="106" class="type">varchar(20)</text>
+    <line x1="14" y1="118" x2="416" y2="118" class="rowline" />
+
+    <text x="20" y="138" class="col">unit_name</text>
+    <text x="286" y="138" class="type">varchar(80) NOT NULL</text>
+  </g>
+
+  <!-- storage_units -->
+  <g transform="translate(525 665)">
+    <rect x="0" y="0" width="745" height="390" rx="12" ry="12" class="table" />
+    <rect x="0" y="0" width="745" height="48" rx="12" ry="12" fill="#c2410c" />
+    <path d="M0 36 H745 V48 H0 Z" fill="#c2410c" />
+    <text x="18" y="25" class="header-text">storage_units</text>
+    <text x="18" y="41" class="schema-text">warehouse.storage_units</text>
+
+    <text x="20" y="74" class="col">order_number</text>
+    <rect x="206" y="62" width="26" height="16" rx="4" fill="#c2410c" /><text x="219" y="74" text-anchor="middle" class="badge">PK</text>
+    <text x="328" y="74" class="type">integer PRIMARY KEY</text>
+    <line x1="14" y1="86" x2="731" y2="86" class="rowline" />
+
+    <text x="20" y="103" class="col">order_date</text>
+    <text x="328" y="103" class="type">date NOT NULL</text>
+    <line x1="14" y1="115" x2="731" y2="115" class="rowline" />
+
+    <text x="20" y="132" class="col">supplier_code</text>
+    <rect x="206" y="120" width="26" height="16" rx="4" fill="#64748b" /><text x="219" y="132" text-anchor="middle" class="badge">FK</text>
+    <text x="328" y="132" class="type">varchar(20) -> suppliers</text>
+    <line x1="14" y1="144" x2="731" y2="144" class="rowline" />
+
+    <text x="20" y="161" class="col">balance_account</text>
+    <text x="328" y="161" class="type">varchar(30) NOT NULL</text>
+    <line x1="14" y1="173" x2="731" y2="173" class="rowline" />
+
+    <text x="20" y="190" class="col">document_type_code</text>
+    <rect x="206" y="178" width="26" height="16" rx="4" fill="#64748b" /><text x="219" y="190" text-anchor="middle" class="badge">FK</text>
+    <text x="328" y="190" class="type">varchar(20) -> document_types</text>
+    <line x1="14" y1="202" x2="731" y2="202" class="rowline" />
+
+    <text x="20" y="219" class="col">document_number</text>
+    <text x="328" y="219" class="type">varchar(50) NOT NULL</text>
+    <line x1="14" y1="231" x2="731" y2="231" class="rowline" />
+
+    <text x="20" y="248" class="col">material_code</text>
+    <rect x="206" y="236" width="26" height="16" rx="4" fill="#64748b" /><text x="219" y="248" text-anchor="middle" class="badge">FK</text>
+    <text x="328" y="248" class="type">varchar(20) -> materials</text>
+    <line x1="14" y1="260" x2="731" y2="260" class="rowline" />
+
+    <text x="20" y="277" class="col">material_account</text>
+    <text x="328" y="277" class="type">varchar(30) NOT NULL</text>
+    <line x1="14" y1="289" x2="731" y2="289" class="rowline" />
+
+    <text x="20" y="306" class="col">unit_code</text>
+    <rect x="206" y="294" width="26" height="16" rx="4" fill="#64748b" /><text x="219" y="306" text-anchor="middle" class="badge">FK</text>
+    <text x="328" y="306" class="type">composite FK -> measurement_units</text>
+    <line x1="14" y1="318" x2="731" y2="318" class="rowline" />
+
+    <text x="20" y="335" class="col">quantity / unit_price</text>
+    <text x="328" y="335" class="type">numeric, NOT NULL, CHECK > 0</text>
+    <line x1="14" y1="347" x2="731" y2="347" class="rowline" />
+
+    <text x="20" y="364" class="col">total_price</text>
+    <text x="328" y="364" class="type">numeric GENERATED ALWAYS AS quantity * unit_price</text>
+  </g>
+
+  <!-- Relationships -->
+  <path d="M300 492 L300 640 L620 640 L620 665" class="arrow" />
+  <text x="312" y="520" class="rel-label">1</text>
+  <text x="630" y="656" class="rel-label">0..N</text>
+  <text x="358" y="666" class="rel-label">supplier_code</text>
+
+  <path d="M865 342 L865 460" class="arrow" />
+  <text x="875" y="368" class="rel-label">1</text>
+  <text x="875" y="448" class="rel-label">0..N</text>
+  <text x="884" y="406" class="rel-label">ON DELETE CASCADE</text>
+
+  <path d="M980 342 L980 420 L1180 420 L1180 640 L1005 640 L1005 665" class="arrow" />
+  <text x="990" y="370" class="rel-label">1</text>
+  <text x="1015" y="656" class="rel-label">0..N</text>
+  <text x="1020" y="404" class="rel-label">material_code</text>
+
+  <path d="M885 626 L885 665" class="arrow" />
+  <text x="895" y="652" class="rel-label">1</text>
+  <text x="895" y="656" class="rel-label">0..N</text>
+  <text x="904" y="642" class="rel-label">material_code + unit_code</text>
+
+  <path d="M1470 277 L1470 640 L1180 640 L1180 665" class="arrow" />
+  <text x="1482" y="300" class="rel-label">1</text>
+  <text x="1190" y="656" class="rel-label">0..N</text>
+  <text x="1275" y="625" class="rel-label">document_type_code</text>
+
+  <!-- Analysis notes -->
+  <g transform="translate(1320 760)">
+    <rect x="0" y="0" width="410" height="220" rx="16" ry="16" class="note-box" />
+    <text x="28" y="44" class="note-title">Analysis Notes</text>
+    <text x="28" y="78" class="note">1. storage_units is the central fact table.</text>
+    <text x="28" y="104" class="note">2. materials -> measurement_units uses cascade delete.</text>
+    <text x="28" y="130" class="note">3. total_price is generated as quantity * unit_price.</text>
+    <text x="28" y="156" class="note">4. supplier delete is blocked when receipts exist.</text>
+    <text x="28" y="182" class="note">5. material account changes sync into storage_units.</text>
+  </g>
+
+  <text x="72" y="1068" class="legend">Legend: arrows show parent PK -> child FK, PK = primary key, FK = foreign key, UQ = unique, generated = calculated stored column.</text>
+</svg>

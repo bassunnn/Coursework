@@ -1,0 +1,5 @@
+Warehouse.Api/bin/
+Warehouse.Api/obj/
+warehouse-client/node_modules/
+warehouse-client/dist/
+.run/
