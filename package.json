@@ -2,6 +2,9 @@
   "private": true,
   "scripts": {
     "dev": "powershell -ExecutionPolicy Bypass -File ./start.ps1",
-    "dev:fast": "powershell -ExecutionPolicy Bypass -File ./start.ps1 -SkipInstall"
+    "dev:fast": "powershell -ExecutionPolicy Bypass -File ./start.ps1 -SkipInstall",
+    "docker:up": "docker compose up --build",
+    "docker:down": "docker compose down",
+    "docker:reset": "docker compose down -v"
   }
 }

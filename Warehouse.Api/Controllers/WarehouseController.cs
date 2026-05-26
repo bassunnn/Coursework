@@ -26,6 +26,12 @@ public sealed class WarehouseController(IWarehouseRepository repository) : Contr
     [HttpGet("storage-units")]
     public IActionResult GetStorageUnits() => Ok(repository.GetStorageUnits());
 
+    [HttpGet("stock-balances")]
+    public IActionResult GetStockBalances() => Ok(repository.GetStockBalances());
+
+    [HttpGet("shipments")]
+    public IActionResult GetShipments() => Ok(repository.GetShipments());
+
     [HttpPost("storage-units")]
     public IActionResult AddStorageUnit(StorageUnitCreateRequest request)
     {
@@ -38,6 +44,43 @@ public sealed class WarehouseController(IWarehouseRepository repository) : Contr
             return BadRequest(new { message = exception.Message });
         }
     }
+
+    [HttpPost("shipments")]
+    public IActionResult AddShipment(ShipmentCreateRequest request)
+    {
+        try
+        {
+            return CreatedAtAction(nameof(GetShipments), repository.AddShipment(request));
+        }
+        catch (InvalidOperationException exception)
+        {
+            return BadRequest(new { message = exception.Message });
+        }
+    }
+
+    [Authorize(Roles = "admin")]
+    [HttpDelete("storage-units/{orderNumber:int}")]
+    public IActionResult DeleteStorageUnit(int orderNumber) =>
+        repository.DeleteStorageUnit(orderNumber)
+            ? NoContent()
+            : NotFound(new { message = "Приход с таким номером ордера не найден." });
+
+    [Authorize(Roles = "admin")]
+    [HttpDelete("storage-units")]
+    public IActionResult ClearStorageUnits() =>
+        Ok(new { deleted = repository.ClearStorageUnits() });
+
+    [Authorize(Roles = "admin")]
+    [HttpDelete("shipments/{shipmentNumber:int}")]
+    public IActionResult DeleteShipment(int shipmentNumber) =>
+        repository.DeleteShipment(shipmentNumber)
+            ? NoContent()
+            : NotFound(new { message = "Расход с таким номером не найден." });
+
+    [Authorize(Roles = "admin")]
+    [HttpDelete("shipments")]
+    public IActionResult ClearShipments() =>
+        Ok(new { deleted = repository.ClearShipments() });
 
     [HttpGet("materials/{materialCode}/supplier-count")]
     public IActionResult CountSuppliersForMaterial(string materialCode) =>

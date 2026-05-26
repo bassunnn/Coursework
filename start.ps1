@@ -4,7 +4,21 @@ param(
 
 $ErrorActionPreference = "Stop"
 
-$RootDir = $PSScriptRoot
+function ConvertTo-ShortPath {
+    param([string]$Path)
+
+    $resolvedPath = (Resolve-Path -LiteralPath $Path).Path
+    $command = "for %I in (`"$resolvedPath`") do @echo %~sI"
+    $shortPath = & cmd.exe /d /c $command
+
+    if ($LASTEXITCODE -eq 0 -and -not [string]::IsNullOrWhiteSpace($shortPath)) {
+        return $shortPath.Trim()
+    }
+
+    return $resolvedPath
+}
+
+$RootDir = ConvertTo-ShortPath $PSScriptRoot
 $ApiProject = Join-Path $RootDir "Warehouse.Api\Warehouse.Api.csproj"
 $ClientDir = Join-Path $RootDir "warehouse-client"
 $LogsDir = Join-Path $RootDir ".run"
@@ -38,11 +52,7 @@ function Stop-ProcessTree {
 }
 
 function Stop-ExistingWarehouseApi {
-    $apiExe = Join-Path $RootDir "Warehouse.Api\bin\Debug\net10.0\Warehouse.Api.exe"
-    $resolvedApiExe = if (Test-Path $apiExe) { (Resolve-Path -LiteralPath $apiExe).Path } else { $apiExe }
-
-    $processes = Get-CimInstance Win32_Process -Filter "Name = 'Warehouse.Api.exe'" -ErrorAction SilentlyContinue |
-        Where-Object { $_.ExecutablePath -eq $resolvedApiExe }
+    $processes = Get-CimInstance Win32_Process -Filter "Name = 'Warehouse.Api.exe'" -ErrorAction SilentlyContinue
 
     foreach ($process in $processes) {
         Write-Host "Stopping existing Warehouse API process $($process.ProcessId)..."

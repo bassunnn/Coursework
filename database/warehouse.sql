@@ -79,6 +79,25 @@ CREATE TABLE storage_units
         REFERENCES measurement_units(material_code, unit_code)
 );
 
+CREATE TABLE shipments
+(
+    shipment_number integer PRIMARY KEY,
+    shipment_date date NOT NULL,
+    destination varchar(200) NOT NULL,
+    material_code varchar(20) NOT NULL,
+    unit_code varchar(20) NOT NULL,
+    quantity numeric(18, 3) NOT NULL CHECK (quantity > 0),
+    document_number varchar(50) NOT NULL,
+    comment varchar(300) NOT NULL DEFAULT '',
+    CONSTRAINT fk_shipments_materials
+        FOREIGN KEY (material_code)
+        REFERENCES materials(material_code)
+        ON UPDATE CASCADE,
+    CONSTRAINT fk_shipments_measurement_units
+        FOREIGN KEY (material_code, unit_code)
+        REFERENCES measurement_units(material_code, unit_code)
+);
+
 INSERT INTO suppliers
     (supplier_code, supplier_name, inn, legal_postal_code, legal_city, legal_street, legal_house,
      bank_postal_code, bank_city, bank_street, bank_house, bank_account_number)
@@ -118,6 +137,12 @@ VALUES
     (1002, '2026-04-12', 'SUP-002', '15', 'INV', 'СФ-981', 'MAT-001', '10.01', 'PCS', 350, 145.00),
     (1003, '2026-04-19', 'SUP-003', '15', 'WAY', 'ТН-118', 'MAT-002', '10.06', 'L', 90, 520.00),
     (1004, '2026-04-28', 'SUP-002', '15', 'ACT', 'АП-77', 'MAT-003', '10.05', 'M', 800, 74.30);
+
+INSERT INTO shipments
+    (shipment_number, shipment_date, destination, material_code, unit_code, quantity, document_number, comment)
+VALUES
+    (5001, '2026-05-03', 'Производственный участок 1', 'MAT-001', 'KG', 220, 'РН-101', 'Передано в работу'),
+    (5002, '2026-05-06', 'Монтажная бригада', 'MAT-003', 'M', 120, 'РН-102', 'Выдано по заявке');
 
 CREATE OR REPLACE FUNCTION count_suppliers_for_material(p_material_code varchar)
 RETURNS integer
@@ -232,6 +257,60 @@ BEGIN
 END;
 $$;
 
+CREATE OR REPLACE PROCEDURE add_shipment(
+    p_shipment_number integer,
+    p_shipment_date date,
+    p_destination varchar,
+    p_material_code varchar,
+    p_unit_code varchar,
+    p_quantity numeric,
+    p_document_number varchar,
+    p_comment varchar
+)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    v_available_quantity numeric;
+BEGIN
+    IF trim(p_destination) = '' THEN
+        RAISE EXCEPTION 'Укажите получателя или направление отгрузки.';
+    END IF;
+
+    IF trim(p_document_number) = '' THEN
+        RAISE EXCEPTION 'Укажите номер расходного документа.';
+    END IF;
+
+    IF p_quantity <= 0 THEN
+        RAISE EXCEPTION 'Количество должно быть больше нуля.';
+    END IF;
+
+    SELECT
+        COALESCE((
+            SELECT SUM(quantity)
+            FROM storage_units
+            WHERE material_code = p_material_code
+              AND unit_code = p_unit_code
+        ), 0)
+        - COALESCE((
+            SELECT SUM(quantity)
+            FROM shipments
+            WHERE material_code = p_material_code
+              AND unit_code = p_unit_code
+        ), 0)
+    INTO v_available_quantity;
+
+    IF p_quantity > v_available_quantity THEN
+        RAISE EXCEPTION 'Недостаточно остатка. Доступно: %.', v_available_quantity;
+    END IF;
+
+    INSERT INTO shipments
+        (shipment_number, shipment_date, destination, material_code, unit_code, quantity, document_number, comment)
+    VALUES
+        (p_shipment_number, p_shipment_date, trim(p_destination), p_material_code, p_unit_code,
+         p_quantity, trim(p_document_number), trim(COALESCE(p_comment, '')));
+END;
+$$;
+
 CREATE OR REPLACE FUNCTION sync_storage_material_account()
 RETURNS trigger
 LANGUAGE plpgsql
@@ -258,6 +337,10 @@ LANGUAGE plpgsql
 AS $$
 BEGIN
     DELETE FROM storage_units
+    WHERE material_code = OLD.material_code
+      AND unit_code = OLD.unit_code;
+
+    DELETE FROM shipments
     WHERE material_code = OLD.material_code
       AND unit_code = OLD.unit_code;
 

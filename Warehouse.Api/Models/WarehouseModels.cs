@@ -67,6 +67,45 @@ public sealed record StorageUnitView(
     decimal TotalPrice,
     string DocumentNumber);
 
+public sealed record Shipment(
+    int ShipmentNumber,
+    DateOnly ShipmentDate,
+    string Destination,
+    string MaterialCode,
+    string UnitCode,
+    decimal Quantity,
+    string DocumentNumber,
+    string Comment);
+
+public sealed record ShipmentCreateRequest(
+    int ShipmentNumber,
+    DateOnly ShipmentDate,
+    string Destination,
+    string MaterialCode,
+    string UnitCode,
+    decimal Quantity,
+    string DocumentNumber,
+    string Comment);
+
+public sealed record ShipmentView(
+    int ShipmentNumber,
+    DateOnly ShipmentDate,
+    string Destination,
+    string MaterialName,
+    string UnitName,
+    decimal Quantity,
+    string DocumentNumber,
+    string Comment);
+
+public sealed record StockBalanceView(
+    string MaterialCode,
+    string MaterialName,
+    string UnitCode,
+    string UnitName,
+    decimal ReceivedQuantity,
+    decimal ShippedQuantity,
+    decimal AvailableQuantity);
+
 public sealed record SupplierForMaterialView(
     string MaterialCode,
     string MaterialName,
@@ -81,7 +120,8 @@ public sealed record SupplierForMaterialView(
 
 public sealed record AuthUser(
     string Email,
-    string Name);
+    string Name,
+    string Role);
 
 public sealed record LoginRequest(
     string Email,
@@ -92,6 +132,12 @@ public sealed record RegisterRequest(
     string Name,
     string Password,
     string InvitationCode);
+
+public sealed record AdminCreateUserRequest(
+    string Email,
+    string Name,
+    string Password,
+    string Role);
 
 public sealed record AuthResponse(
     string Token,

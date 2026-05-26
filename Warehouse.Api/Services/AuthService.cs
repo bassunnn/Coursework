@@ -14,6 +14,9 @@ public sealed class AuthOptions
     public string SeedUserEmail { get; set; } = "employee@warehouse.local";
     public string SeedUserName { get; set; } = "Сотрудник склада";
     public string SeedUserPassword { get; set; } = "Warehouse123!";
+    public string SeedAdminEmail { get; set; } = "admin@warehouse.local";
+    public string SeedAdminName { get; set; } = "Администратор";
+    public string SeedAdminPassword { get; set; } = "Admin123!";
     public string[] InvitationCodes { get; set; } = ["INVITE-2026", "WAREHOUSE-ACCESS"];
 }
 
@@ -21,6 +24,10 @@ public interface IAuthService
 {
     AuthResponse Login(LoginRequest request);
     AuthResponse Register(RegisterRequest request);
+    IReadOnlyCollection<AuthUser> GetUsers();
+    IReadOnlyCollection<string> GetInvitationCodes();
+    AuthUser CreateUser(AdminCreateUserRequest request);
+    bool DeleteEmployee(string email);
     AuthUser? ValidateToken(string token);
 }
 
@@ -38,7 +45,8 @@ public sealed class AuthService : IAuthService
             .Select(code => code.Trim())
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
-        AddUser(authOptions.SeedUserEmail, authOptions.SeedUserName, authOptions.SeedUserPassword);
+        AddUser(authOptions.SeedUserEmail, authOptions.SeedUserName, authOptions.SeedUserPassword, Roles.Employee);
+        AddUser(authOptions.SeedAdminEmail, authOptions.SeedAdminName, authOptions.SeedAdminPassword, Roles.Admin);
     }
 
     public AuthResponse Login(LoginRequest request)
@@ -59,17 +67,7 @@ public sealed class AuthService : IAuthService
             throw new InvalidOperationException("Код приглашения недействителен.");
         }
 
-        if (string.IsNullOrWhiteSpace(request.Name))
-        {
-            throw new InvalidOperationException("Укажите имя пользователя.");
-        }
-
-        if (request.Password.Length < 6)
-        {
-            throw new InvalidOperationException("Пароль должен быть не короче 6 символов.");
-        }
-
-        var user = CreateUser(request.Email, request.Name.Trim(), request.Password);
+        var user = CreateUserAccount(request.Email, request.Name.Trim(), request.Password, Roles.Employee);
 
         if (!_users.TryAdd(user.Email, user))
         {
@@ -79,6 +77,57 @@ public sealed class AuthService : IAuthService
         return IssueToken(user);
     }
 
+    public IReadOnlyCollection<AuthUser> GetUsers() =>
+        _users.Values
+            .OrderByDescending(user => user.Role == Roles.Admin)
+            .ThenBy(user => user.Name)
+            .Select(ToAuthUser)
+            .ToArray();
+
+    public IReadOnlyCollection<string> GetInvitationCodes() =>
+        _invitationCodes
+            .OrderBy(code => code)
+            .ToArray();
+
+    public AuthUser CreateUser(AdminCreateUserRequest request)
+    {
+        var user = CreateUserAccount(request.Email, request.Name.Trim(), request.Password, request.Role);
+
+        if (!_users.TryAdd(user.Email, user))
+        {
+            throw new InvalidOperationException("Пользователь с такой почтой уже зарегистрирован.");
+        }
+
+        return ToAuthUser(user);
+    }
+
+    public bool DeleteEmployee(string email)
+    {
+        var normalizedEmail = NormalizeEmail(email);
+
+        if (!_users.TryGetValue(normalizedEmail, out var user))
+        {
+            return false;
+        }
+
+        if (user.Role != Roles.Employee)
+        {
+            throw new InvalidOperationException("Можно удалять только аккаунты сотрудников.");
+        }
+
+        if (!_users.TryRemove(normalizedEmail, out _))
+        {
+            return false;
+        }
+
+        foreach (var token in _tokens.Where(item => item.Value.Equals(normalizedEmail, StringComparison.OrdinalIgnoreCase)))
+        {
+            _tokens.TryRemove(token.Key, out _);
+        }
+
+        return true;
+    }
+
     public AuthUser? ValidateToken(string token)
     {
         if (!_tokens.TryGetValue(token, out var email) || !_users.TryGetValue(email, out var user))
@@ -86,16 +135,16 @@ public sealed class AuthService : IAuthService
             return null;
         }
 
-        return new AuthUser(user.Email, user.Name);
+        return ToAuthUser(user);
     }
 
-    private void AddUser(string email, string name, string password)
+    private void AddUser(string email, string name, string password, string role)
     {
-        var user = CreateUser(email, name, password);
+        var user = CreateUserAccount(email, name, password, role);
         _users.TryAdd(user.Email, user);
     }
 
-    private static UserAccount CreateUser(string email, string name, string password)
+    private static UserAccount CreateUserAccount(string email, string name, string password, string role)
     {
         var normalizedEmail = NormalizeEmail(email);
 
@@ -104,18 +153,48 @@ public sealed class AuthService : IAuthService
             throw new InvalidOperationException("Укажите корректную почту.");
         }
 
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            throw new InvalidOperationException("Укажите имя пользователя.");
+        }
+
+        if (password.Length < 6)
+        {
+            throw new InvalidOperationException("Пароль должен быть не короче 6 символов.");
+        }
+
         var salt = RandomNumberGenerator.GetBytes(16);
-        return new UserAccount(normalizedEmail, name, HashPassword(password, salt), salt);
+        return new UserAccount(
+            normalizedEmail,
+            name,
+            NormalizeRole(role),
+            HashPassword(password, salt),
+            salt);
     }
 
     private AuthResponse IssueToken(UserAccount user)
     {
         var token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
         _tokens[token] = user.Email;
-        return new AuthResponse(token, new AuthUser(user.Email, user.Name));
+        return new AuthResponse(token, ToAuthUser(user));
     }
 
     private static string NormalizeEmail(string email) => email.Trim().ToLowerInvariant();
+
+    private static string NormalizeRole(string role)
+    {
+        var normalizedRole = role.Trim().ToLowerInvariant();
+
+        if (normalizedRole is Roles.Admin or Roles.Employee)
+        {
+            return normalizedRole;
+        }
+
+        throw new InvalidOperationException("Неизвестная роль пользователя.");
+    }
+
+    private static AuthUser ToAuthUser(UserAccount user) =>
+        new(user.Email, user.Name, user.Role);
 
     private static byte[] HashPassword(string password, byte[] salt) =>
         Rfc2898DeriveBytes.Pbkdf2(
@@ -134,8 +213,15 @@ public sealed class AuthService : IAuthService
     private sealed record UserAccount(
         string Email,
         string Name,
+        string Role,
         byte[] PasswordHash,
         byte[] PasswordSalt);
+
+    private static class Roles
+    {
+        public const string Admin = "admin";
+        public const string Employee = "employee";
+    }
 }
 
 public sealed class TokenAuthenticationHandler(
@@ -167,6 +253,7 @@ public sealed class TokenAuthenticationHandler(
             new Claim(ClaimTypes.NameIdentifier, user.Email),
             new Claim(ClaimTypes.Name, user.Name),
             new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.Role, user.Role),
         };
         var identity = new ClaimsIdentity(claims, Scheme.Name);
         var principal = new ClaimsPrincipal(identity);

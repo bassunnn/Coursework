@@ -1,0 +1,44 @@
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: warehouse
+      POSTGRES_USER: warehouse
+      POSTGRES_PASSWORD: warehouse
+    ports:
+      - "5432:5432"
+    volumes:
+      - warehouse-db-data:/var/lib/postgresql/data
+      - ./database/warehouse.sql:/docker-entrypoint-initdb.d/01-warehouse.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U warehouse -d warehouse"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: Warehouse.Api/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__WarehouseDb: Host=db;Port=5432;Database=warehouse;Username=warehouse;Password=warehouse
+    ports:
+      - "5064:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  client:
+    build:
+      context: .
+      dockerfile: warehouse-client/Dockerfile
+      args:
+        VITE_API_URL: /api/warehouse
+    ports:
+      - "5173:80"
+    depends_on:
+      - api
+
+volumes:
+  warehouse-db-data:

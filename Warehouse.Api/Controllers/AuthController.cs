@@ -42,6 +42,45 @@ public sealed class AuthController(IAuthService authService) : ControllerBase
     {
         return Ok(new AuthUser(
             User.FindFirstValue(ClaimTypes.Email) ?? string.Empty,
-            User.FindFirstValue(ClaimTypes.Name) ?? string.Empty));
+            User.FindFirstValue(ClaimTypes.Name) ?? string.Empty,
+            User.FindFirstValue(ClaimTypes.Role) ?? string.Empty));
+    }
+
+    [Authorize(Roles = "admin")]
+    [HttpGet("users")]
+    public IActionResult GetUsers() => Ok(authService.GetUsers());
+
+    [Authorize(Roles = "admin")]
+    [HttpGet("invitation-codes")]
+    public IActionResult GetInvitationCodes() => Ok(authService.GetInvitationCodes());
+
+    [Authorize(Roles = "admin")]
+    [HttpPost("users")]
+    public IActionResult CreateUser(AdminCreateUserRequest request)
+    {
+        try
+        {
+            return CreatedAtAction(nameof(GetUsers), authService.CreateUser(request));
+        }
+        catch (InvalidOperationException exception)
+        {
+            return BadRequest(new { message = exception.Message });
+        }
+    }
+
+    [Authorize(Roles = "admin")]
+    [HttpDelete("users/{email}")]
+    public IActionResult DeleteEmployee(string email)
+    {
+        try
+        {
+            return authService.DeleteEmployee(email)
+                ? NoContent()
+                : NotFound(new { message = "Сотрудник с такой почтой не найден." });
+        }
+        catch (InvalidOperationException exception)
+        {
+            return BadRequest(new { message = exception.Message });
+        }
     }
 }

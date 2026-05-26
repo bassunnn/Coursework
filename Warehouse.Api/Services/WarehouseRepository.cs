@@ -9,7 +9,14 @@ public interface IWarehouseRepository
     IReadOnlyCollection<DocumentType> GetDocumentTypes();
     IReadOnlyCollection<MeasurementUnit> GetMeasurementUnits(string? materialCode = null);
     IReadOnlyCollection<StorageUnitView> GetStorageUnits();
+    IReadOnlyCollection<ShipmentView> GetShipments();
+    IReadOnlyCollection<StockBalanceView> GetStockBalances();
     StorageUnit AddStorageUnit(StorageUnitCreateRequest request);
+    Shipment AddShipment(ShipmentCreateRequest request);
+    bool DeleteStorageUnit(int orderNumber);
+    int ClearStorageUnits();
+    bool DeleteShipment(int shipmentNumber);
+    int ClearShipments();
     int CountSuppliersForMaterial(string materialCode);
     IReadOnlyCollection<SupplierForMaterialView> GetSuppliersForMaterial(string materialCode);
     int CountSuppliersByBankAddress(Address bankAddress);
@@ -72,6 +79,12 @@ public sealed class WarehouseRepository : IWarehouseRepository
         new(1004, new DateOnly(2026, 4, 28), "SUP-002", "15", "ACT", "АП-77", "MAT-003", "10.05", "M", 800, 74.30m)
     ];
 
+    private readonly List<Shipment> _shipments =
+    [
+        new(5001, new DateOnly(2026, 5, 3), "Производственный участок 1", "MAT-001", "KG", 220, "РН-101", "Передано в работу"),
+        new(5002, new DateOnly(2026, 5, 6), "Монтажная бригада", "MAT-003", "M", 120, "РН-102", "Выдано по заявке")
+    ];
+
     private readonly object _sync = new();
 
     public IReadOnlyCollection<Material> GetMaterials() => _materials;
@@ -97,6 +110,45 @@ public sealed class WarehouseRepository : IWarehouseRepository
                 .OrderByDescending(unit => unit.OrderDate)
                 .ThenByDescending(unit => unit.OrderNumber)
                 .Select(ToView)
+                .ToArray();
+        }
+    }
+
+    public IReadOnlyCollection<ShipmentView> GetShipments()
+    {
+        lock (_sync)
+        {
+            return _shipments
+                .OrderByDescending(shipment => shipment.ShipmentDate)
+                .ThenByDescending(shipment => shipment.ShipmentNumber)
+                .Select(ToView)
+                .ToArray();
+        }
+    }
+
+    public IReadOnlyCollection<StockBalanceView> GetStockBalances()
+    {
+        lock (_sync)
+        {
+            return _measurementUnits
+                .Select(unit =>
+                {
+                    var material = FindMaterial(unit.MaterialCode);
+                    var received = GetReceivedQuantity(unit.MaterialCode, unit.UnitCode);
+                    var shipped = GetShippedQuantity(unit.MaterialCode, unit.UnitCode);
+
+                    return new StockBalanceView(
+                        material.Code,
+                        material.Name,
+                        unit.UnitCode,
+                        unit.UnitName,
+                        received,
+                        shipped,
+                        received - shipped);
+                })
+                .Where(balance => balance.ReceivedQuantity > 0 || balance.ShippedQuantity > 0)
+                .OrderBy(balance => balance.MaterialName)
+                .ThenBy(balance => balance.UnitName)
                 .ToArray();
         }
     }
@@ -129,6 +181,77 @@ public sealed class WarehouseRepository : IWarehouseRepository
         }
 
         return storageUnit;
+    }
+
+    public Shipment AddShipment(ShipmentCreateRequest request)
+    {
+        ValidateShipmentRequest(request);
+
+        var shipment = new Shipment(
+            request.ShipmentNumber,
+            request.ShipmentDate,
+            request.Destination.Trim(),
+            request.MaterialCode,
+            request.UnitCode,
+            request.Quantity,
+            request.DocumentNumber.Trim(),
+            request.Comment.Trim());
+
+        lock (_sync)
+        {
+            if (_shipments.Any(item => item.ShipmentNumber == request.ShipmentNumber))
+            {
+                throw new InvalidOperationException("Расходная операция с таким номером уже существует.");
+            }
+
+            var available = GetAvailableQuantity(request.MaterialCode, request.UnitCode);
+            if (request.Quantity > available)
+            {
+                throw new InvalidOperationException($"Недостаточно остатка. Доступно: {available}.");
+            }
+
+            _shipments.Add(shipment);
+        }
+
+        return shipment;
+    }
+
+    public bool DeleteStorageUnit(int orderNumber)
+    {
+        lock (_sync)
+        {
+            var removed = _storageUnits.RemoveAll(unit => unit.OrderNumber == orderNumber);
+            return removed > 0;
+        }
+    }
+
+    public int ClearStorageUnits()
+    {
+        lock (_sync)
+        {
+            var removed = _storageUnits.Count;
+            _storageUnits.Clear();
+            return removed;
+        }
+    }
+
+    public bool DeleteShipment(int shipmentNumber)
+    {
+        lock (_sync)
+        {
+            var removed = _shipments.RemoveAll(shipment => shipment.ShipmentNumber == shipmentNumber);
+            return removed > 0;
+        }
+    }
+
+    public int ClearShipments()
+    {
+        lock (_sync)
+        {
+            var removed = _shipments.Count;
+            _shipments.Clear();
+            return removed;
+        }
     }
 
     public int CountSuppliersForMaterial(string materialCode)
@@ -191,6 +314,23 @@ public sealed class WarehouseRepository : IWarehouseRepository
             unit.DocumentNumber);
     }
 
+    private ShipmentView ToView(Shipment shipment)
+    {
+        var material = FindMaterial(shipment.MaterialCode);
+        var measurementUnit = _measurementUnits.First(item =>
+            item.MaterialCode == shipment.MaterialCode && item.UnitCode == shipment.UnitCode);
+
+        return new ShipmentView(
+            shipment.ShipmentNumber,
+            shipment.ShipmentDate,
+            shipment.Destination,
+            material.Name,
+            measurementUnit.UnitName,
+            shipment.Quantity,
+            shipment.DocumentNumber,
+            shipment.Comment);
+    }
+
     private void ValidateRequest(StorageUnitCreateRequest request)
     {
         _ = FindSupplier(request.SupplierCode);
@@ -217,6 +357,49 @@ public sealed class WarehouseRepository : IWarehouseRepository
             throw new InvalidOperationException("Счет материала не соответствует справочнику материалов.");
         }
     }
+
+    private void ValidateShipmentRequest(ShipmentCreateRequest request)
+    {
+        _ = FindMaterial(request.MaterialCode);
+
+        if (!_measurementUnits.Any(unit =>
+            unit.MaterialCode == request.MaterialCode && unit.UnitCode == request.UnitCode))
+        {
+            throw new InvalidOperationException("Для выбранного материала нет такой единицы измерения.");
+        }
+
+        if (request.Quantity <= 0)
+        {
+            throw new InvalidOperationException("Количество должно быть больше нуля.");
+        }
+
+        if (string.IsNullOrWhiteSpace(request.Destination))
+        {
+            throw new InvalidOperationException("Укажите получателя или направление отгрузки.");
+        }
+
+        if (string.IsNullOrWhiteSpace(request.DocumentNumber))
+        {
+            throw new InvalidOperationException("Укажите номер расходного документа.");
+        }
+    }
+
+    private decimal GetAvailableQuantity(string materialCode, string unitCode) =>
+        GetReceivedQuantity(materialCode, unitCode) - GetShippedQuantity(materialCode, unitCode);
+
+    private decimal GetReceivedQuantity(string materialCode, string unitCode) =>
+        _storageUnits
+            .Where(unit =>
+                unit.MaterialCode.Equals(materialCode, StringComparison.OrdinalIgnoreCase)
+                && unit.UnitCode.Equals(unitCode, StringComparison.OrdinalIgnoreCase))
+            .Sum(unit => unit.Quantity);
+
+    private decimal GetShippedQuantity(string materialCode, string unitCode) =>
+        _shipments
+            .Where(shipment =>
+                shipment.MaterialCode.Equals(materialCode, StringComparison.OrdinalIgnoreCase)
+                && shipment.UnitCode.Equals(unitCode, StringComparison.OrdinalIgnoreCase))
+            .Sum(shipment => shipment.Quantity);
 
     private Supplier FindSupplier(string code) =>
         _suppliers.FirstOrDefault(supplier => supplier.Code.Equals(code, StringComparison.OrdinalIgnoreCase))

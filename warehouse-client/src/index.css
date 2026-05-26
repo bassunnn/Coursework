@@ -9,7 +9,9 @@
   --field-bg: #ffffff;
   --accent: #d6a700;
   --accent-hover: #b88e00;
+  --accent-soft: #f7e7a8;
   --accent-ink: #17140a;
+  --shadow: 0 14px 36px rgb(67 52 8 / 8%);
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
@@ -32,7 +34,9 @@
   --field-bg: #20201e;
   --accent: #f2c230;
   --accent-hover: #ffd75c;
+  --accent-soft: #5a4916;
   --accent-ink: #15110a;
+  --shadow: 0 18px 42px rgb(0 0 0 / 22%);
 }
 
 * {
@@ -53,9 +57,9 @@ p {
 
 h1 {
   color: var(--ink);
-  font-size: 36px;
+  font-size: 32px;
   line-height: 1.12;
-  font-weight: 800;
+  font-weight: 850;
   letter-spacing: 0;
 }
 
@@ -63,12 +67,12 @@ h2 {
   color: var(--ink);
   font-size: 18px;
   line-height: 1.2;
-  font-weight: 800;
+  font-weight: 850;
   letter-spacing: 0;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 720px) {
   h1 {
-    font-size: 28px;
+    font-size: 26px;
   }
 }

@@ -75,7 +75,7 @@ public sealed class PostgresWarehouseRepository(NpgsqlDataSource dataSource) : I
         using var command = dataSource.CreateCommand("""
             SELECT material_code, unit_code, unit_name
             FROM warehouse.measurement_units
-            WHERE @material_code IS NULL OR material_code = @material_code
+            WHERE @material_code::varchar IS NULL OR material_code = @material_code
             ORDER BY unit_name;
             """);
         command.Parameters.AddWithValue("material_code", (object?)materialCode ?? DBNull.Value);
@@ -120,6 +120,84 @@ public sealed class PostgresWarehouseRepository(NpgsqlDataSource dataSource) : I
                 reader.GetDecimal(6),
                 reader.GetDecimal(7),
                 reader.GetString(8)));
+        }
+
+        return items;
+    }
+
+    public IReadOnlyCollection<ShipmentView> GetShipments()
+    {
+        using var command = dataSource.CreateCommand("""
+            SELECT sh.shipment_number, sh.shipment_date, sh.destination,
+                   m.material_name, mu.unit_name, sh.quantity, sh.document_number, sh.comment
+            FROM warehouse.shipments AS sh
+            JOIN warehouse.materials AS m ON m.material_code = sh.material_code
+            JOIN warehouse.measurement_units AS mu
+              ON mu.material_code = sh.material_code
+             AND mu.unit_code = sh.unit_code
+            ORDER BY sh.shipment_date DESC, sh.shipment_number DESC;
+            """);
+
+        using var reader = command.ExecuteReader();
+        var items = new List<ShipmentView>();
+
+        while (reader.Read())
+        {
+            items.Add(new ShipmentView(
+                reader.GetInt32(0),
+                reader.GetFieldValue<DateOnly>(1),
+                reader.GetString(2),
+                reader.GetString(3),
+                reader.GetString(4),
+                reader.GetDecimal(5),
+                reader.GetString(6),
+                reader.GetString(7)));
+        }
+
+        return items;
+    }
+
+    public IReadOnlyCollection<StockBalanceView> GetStockBalances()
+    {
+        using var command = dataSource.CreateCommand("""
+            SELECT m.material_code, m.material_name, mu.unit_code, mu.unit_name,
+                   COALESCE(receipts.received_quantity, 0) AS received_quantity,
+                   COALESCE(shipments.shipped_quantity, 0) AS shipped_quantity,
+                   COALESCE(receipts.received_quantity, 0) - COALESCE(shipments.shipped_quantity, 0) AS available_quantity
+            FROM warehouse.measurement_units AS mu
+            JOIN warehouse.materials AS m ON m.material_code = mu.material_code
+            LEFT JOIN (
+                SELECT material_code, unit_code, SUM(quantity) AS received_quantity
+                FROM warehouse.storage_units
+                GROUP BY material_code, unit_code
+            ) AS receipts
+              ON receipts.material_code = mu.material_code
+             AND receipts.unit_code = mu.unit_code
+            LEFT JOIN (
+                SELECT material_code, unit_code, SUM(quantity) AS shipped_quantity
+                FROM warehouse.shipments
+                GROUP BY material_code, unit_code
+            ) AS shipments
+              ON shipments.material_code = mu.material_code
+             AND shipments.unit_code = mu.unit_code
+            WHERE COALESCE(receipts.received_quantity, 0) > 0
+               OR COALESCE(shipments.shipped_quantity, 0) > 0
+            ORDER BY m.material_name, mu.unit_name;
+            """);
+
+        using var reader = command.ExecuteReader();
+        var items = new List<StockBalanceView>();
+
+        while (reader.Read())
+        {
+            items.Add(new StockBalanceView(
+                reader.GetString(0),
+                reader.GetString(1),
+                reader.GetString(2),
+                reader.GetString(3),
+                reader.GetDecimal(4),
+                reader.GetDecimal(5),
+                reader.GetDecimal(6)));
         }
 
         return items;
@@ -176,6 +254,82 @@ public sealed class PostgresWarehouseRepository(NpgsqlDataSource dataSource) : I
             request.UnitCode,
             request.Quantity,
             request.UnitPrice);
+    }
+
+    public Shipment AddShipment(ShipmentCreateRequest request)
+    {
+        using var command = dataSource.CreateCommand("""
+            CALL warehouse.add_shipment(
+                @shipment_number,
+                @shipment_date,
+                @destination,
+                @material_code,
+                @unit_code,
+                @quantity,
+                @document_number,
+                @comment
+            );
+            """);
+
+        command.Parameters.AddWithValue("shipment_number", request.ShipmentNumber);
+        command.Parameters.AddWithValue("shipment_date", request.ShipmentDate);
+        command.Parameters.AddWithValue("destination", request.Destination);
+        command.Parameters.AddWithValue("material_code", request.MaterialCode);
+        command.Parameters.AddWithValue("unit_code", request.UnitCode);
+        command.Parameters.AddWithValue("quantity", request.Quantity);
+        command.Parameters.AddWithValue("document_number", request.DocumentNumber);
+        command.Parameters.AddWithValue("comment", request.Comment);
+
+        try
+        {
+            command.ExecuteNonQuery();
+        }
+        catch (PostgresException exception)
+        {
+            throw new InvalidOperationException(exception.MessageText, exception);
+        }
+
+        return new Shipment(
+            request.ShipmentNumber,
+            request.ShipmentDate,
+            request.Destination,
+            request.MaterialCode,
+            request.UnitCode,
+            request.Quantity,
+            request.DocumentNumber,
+            request.Comment);
+    }
+
+    public bool DeleteStorageUnit(int orderNumber)
+    {
+        using var command = dataSource.CreateCommand("""
+            DELETE FROM warehouse.storage_units
+            WHERE order_number = @order_number;
+            """);
+        command.Parameters.AddWithValue("order_number", orderNumber);
+        return command.ExecuteNonQuery() > 0;
+    }
+
+    public int ClearStorageUnits()
+    {
+        using var command = dataSource.CreateCommand("DELETE FROM warehouse.storage_units;");
+        return command.ExecuteNonQuery();
+    }
+
+    public bool DeleteShipment(int shipmentNumber)
+    {
+        using var command = dataSource.CreateCommand("""
+            DELETE FROM warehouse.shipments
+            WHERE shipment_number = @shipment_number;
+            """);
+        command.Parameters.AddWithValue("shipment_number", shipmentNumber);
+        return command.ExecuteNonQuery() > 0;
+    }
+
+    public int ClearShipments()
+    {
+        using var command = dataSource.CreateCommand("DELETE FROM warehouse.shipments;");
+        return command.ExecuteNonQuery();
     }
 
     public int CountSuppliersForMaterial(string materialCode)
