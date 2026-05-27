@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="1100" viewBox="0 0 1700 1100">
+  <defs>
+    <marker id="arrow-down" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M1,1 L9,5 L1,9 Z" fill="#2f3a48" />
+    </marker>
+    <style>
+      .page-title { font-family: Arial, sans-serif; font-size: 32px; font-weight: 700; fill: #1d2633; }
+      .subtitle { font-family: Arial, sans-serif; font-size: 15px; font-weight: 500; fill: #485466; }
+      .role-box { fill: #ffffff; stroke: #2f3a48; stroke-width: 2.2; }
+      .role-title { font-family: Arial, sans-serif; font-size: 15px; font-weight: 700; fill: #1d2633; text-anchor: middle; }
+      .role-note { font-family: Arial, sans-serif; font-size: 12px; font-weight: 500; fill: #485466; text-anchor: middle; }
+      .inherit-line { stroke: #2f3a48; stroke-width: 2.2; fill: none; marker-end: url(#arrow-down); }
+      .inherit-text { font-family: Arial, sans-serif; font-size: 12px; font-weight: 500; fill: #667085; text-anchor: middle; }
+      .panel { fill: #ffffff; stroke: #2f3a48; stroke-width: 2.2; }
+      .panel-head { fill: #f0f2f5; stroke: #2f3a48; stroke-width: 2.2; }
+      .panel-title { font-family: Arial, sans-serif; font-size: 15px; font-weight: 700; fill: #1d2633; }
+      .action { fill: #f8fbff; stroke: #7890aa; stroke-width: 1.8; }
+      .action-text { font-family: Arial, sans-serif; font-size: 13px; font-weight: 700; fill: #1d2633; }
+      .hint { font-family: Arial, sans-serif; font-size: 12px; font-weight: 500; fill: #667085; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1700" height="1100" fill="#ffffff" />
+
+  <text x="48" y="58" class="page-title">Use Case: роли и действия пользователей системы</text>
+  <text x="48" y="86" class="subtitle">Наследование ролей идет сверху вниз: каждая следующая роль сохраняет действия предыдущей и добавляет свои.</text>
+
+  <!-- Role hierarchy -->
+  <g transform="translate(58 158)">
+    <rect x="0" y="0" width="250" height="92" rx="10" class="role-box" />
+    <text x="125" y="38" class="role-title">Новичок</text>
+    <text x="125" y="60" class="role-note">регистрация доступа</text>
+  </g>
+
+  <path d="M183 253 L183 406" class="inherit-line" />
+  <rect x="218" y="313" width="145" height="28" rx="5" fill="#ffffff" />
+  <text x="290" y="332" class="inherit-text">после регистрации</text>
+
+  <g transform="translate(58 419)">
+    <rect x="0" y="0" width="250" height="92" rx="10" class="role-box" />
+    <text x="125" y="38" class="role-title">Сотрудник</text>
+    <text x="125" y="60" class="role-note">складские операции</text>
+  </g>
+
+  <path d="M183 514 L183 716" class="inherit-line" />
+  <rect x="218" y="601" width="130" height="28" rx="5" fill="#ffffff" />
+  <text x="283" y="620" class="inherit-text">расширяет права</text>
+
+  <g transform="translate(58 729)">
+    <rect x="0" y="0" width="250" height="92" rx="10" class="role-box" />
+    <text x="125" y="38" class="role-title">Администратор</text>
+    <text x="125" y="60" class="role-note">контроль и управление</text>
+  </g>
+
+  <!-- Newbie panel -->
+  <g transform="translate(360 124)">
+    <rect x="0" y="0" width="1250" height="160" rx="8" class="panel" />
+    <rect x="0" y="0" width="1250" height="42" class="panel-head" />
+    <text x="18" y="27" class="panel-title">Новичок</text>
+
+    <rect x="24" y="66" width="360" height="34" rx="7" class="action" />
+    <text x="39" y="88" class="action-text">Зарегистрироваться по коду приглашения</text>
+
+    <rect x="410" y="66" width="310" height="34" rx="7" class="action" />
+    <text x="425" y="88" class="action-text">Войти в систему</text>
+
+    <rect x="746" y="66" width="360" height="34" rx="7" class="action" />
+    <text x="761" y="88" class="action-text">Получить доступные разделы</text>
+
+    <rect x="24" y="112" width="360" height="34" rx="7" class="action" />
+    <text x="39" y="134" class="action-text">Восстановить рабочую сессию</text>
+  </g>
+
+  <!-- Employee panel -->
+  <g transform="translate(360 340)">
+    <rect x="0" y="0" width="1250" height="250" rx="8" class="panel" />
+    <rect x="0" y="0" width="1250" height="42" class="panel-head" />
+    <text x="18" y="27" class="panel-title">Сотрудник склада</text>
+
+    <rect x="24" y="66" width="360" height="34" rx="7" class="action" />
+    <text x="39" y="88" class="action-text">Просмотреть сводные показатели склада</text>
+
+    <rect x="410" y="66" width="360" height="34" rx="7" class="action" />
+    <text x="425" y="88" class="action-text">Оформить приход материала</text>
+
+    <rect x="796" y="66" width="360" height="34" rx="7" class="action" />
+    <text x="811" y="88" class="action-text">Оформить расход материала</text>
+
+    <rect x="24" y="112" width="360" height="34" rx="7" class="action" />
+    <text x="39" y="134" class="action-text">Просмотреть и найти материалы</text>
+
+    <rect x="410" y="112" width="360" height="34" rx="7" class="action" />
+    <text x="425" y="134" class="action-text">Просмотреть справочники склада</text>
+
+    <rect x="796" y="112" width="360" height="34" rx="7" class="action" />
+    <text x="811" y="134" class="action-text">Просмотреть журналы операций</text>
+
+    <rect x="24" y="158" width="360" height="34" rx="7" class="action" />
+    <text x="39" y="180" class="action-text">Просмотреть остатки на складе</text>
+
+    <rect x="410" y="158" width="360" height="34" rx="7" class="action" />
+    <text x="425" y="180" class="action-text">Сформировать отчет по материалу</text>
+
+    <rect x="796" y="158" width="360" height="34" rx="7" class="action" />
+    <text x="811" y="180" class="action-text">Подсчитать поставщиков по банку</text>
+
+    <rect x="24" y="204" width="360" height="34" rx="7" class="action" />
+    <text x="39" y="226" class="action-text">Выйти из системы</text>
+  </g>
+
+  <!-- Admin panel -->
+  <g transform="translate(360 650)">
+    <rect x="0" y="0" width="1250" height="250" rx="8" class="panel" />
+    <rect x="0" y="0" width="1250" height="42" class="panel-head" />
+    <text x="18" y="27" class="panel-title">Администратор</text>
+
+    <rect x="24" y="66" width="360" height="34" rx="7" class="action" />
+    <text x="39" y="88" class="action-text">Просмотреть список пользователей</text>
+
+    <rect x="410" y="66" width="360" height="34" rx="7" class="action" />
+    <text x="425" y="88" class="action-text">Создать сотрудника</text>
+
+    <rect x="796" y="66" width="360" height="34" rx="7" class="action" />
+    <text x="811" y="88" class="action-text">Создать администратора</text>
+
+    <rect x="24" y="112" width="360" height="34" rx="7" class="action" />
+    <text x="39" y="134" class="action-text">Получить коды приглашения</text>
+
+    <rect x="410" y="112" width="360" height="34" rx="7" class="action" />
+    <text x="425" y="134" class="action-text">Удалить аккаунт сотрудника</text>
+
+    <rect x="796" y="112" width="360" height="34" rx="7" class="action" />
+    <text x="811" y="134" class="action-text">Контролировать доступ по ролям</text>
+
+    <rect x="24" y="158" width="360" height="34" rx="7" class="action" />
+    <text x="39" y="180" class="action-text">Удалить запись прихода</text>
+
+    <rect x="410" y="158" width="360" height="34" rx="7" class="action" />
+    <text x="425" y="180" class="action-text">Удалить запись расхода</text>
+
+    <rect x="796" y="158" width="360" height="34" rx="7" class="action" />
+    <text x="811" y="180" class="action-text">Очистить журналы операций</text>
+
+    <rect x="24" y="204" width="360" height="34" rx="7" class="action" />
+    <text x="39" y="226" class="action-text">Проверить складские данные</text>
+  </g>
+
+  <text x="985" y="965" class="hint">Администратор сохраняет все возможности сотрудника; сотрудник сохраняет действия новичка после авторизации.</text>
+</svg>

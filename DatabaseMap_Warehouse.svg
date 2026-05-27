@@ -17,29 +17,29 @@
 <text x="18" y="41" style="font-family:Arial,sans-serif;font-size:11px;font-weight:500;fill:#eaf2ff" >warehouse.suppliers</text>
 <text x="20" y="74" style="font-family:Consolas,monospace;font-size:13px;font-weight:500;fill:#25364d" >supplier_code</text>
 <rect x="220" y="62" width="26" height="16" rx="4" fill="#2563eb" /><text x="233" y="74" text-anchor="middle" style="font-family:Arial,sans-serif;font-size:9px;font-weight:700;fill:#ffffff">PK</text>
-<text x="325" y="74" style="font-family:Consolas,monospace;font-size:12px;font-weight:500;fill:#66758a" >varchar(20)</text>
+<text x="275" y="74" style="font-family:Consolas,monospace;font-size:11px;font-weight:500;fill:#66758a" >varchar(20)</text>
 <line x1="14" y1="86" x2="441" y2="86" style="stroke:#e7edf5;stroke-width:1" />
 <text x="20" y="104" style="font-family:Consolas,monospace;font-size:13px;font-weight:500;fill:#25364d" >supplier_name</text>
-<text x="325" y="104" style="font-family:Consolas,monospace;font-size:12px;font-weight:500;fill:#66758a" >varchar(200) NOT NULL</text>
+<text x="275" y="104" style="font-family:Consolas,monospace;font-size:11px;font-weight:500;fill:#66758a" >varchar(200) NOT NULL</text>
 <line x1="14" y1="116" x2="441" y2="116" style="stroke:#e7edf5;stroke-width:1" />
 <text x="20" y="134" style="font-family:Consolas,monospace;font-size:13px;font-weight:500;fill:#25364d" >inn</text>
 <rect x="220" y="122" width="26" height="16" rx="4" fill="#64748b" /><text x="233" y="134" text-anchor="middle" style="font-family:Arial,sans-serif;font-size:9px;font-weight:700;fill:#ffffff">UQ</text>
-<text x="325" y="134" style="font-family:Consolas,monospace;font-size:12px;font-weight:500;fill:#66758a" >varchar(12) NOT NULL</text>
+<text x="275" y="134" style="font-family:Consolas,monospace;font-size:11px;font-weight:500;fill:#66758a" >varchar(12) NOT NULL</text>
 <line x1="14" y1="146" x2="441" y2="146" style="stroke:#e7edf5;stroke-width:1" />
 <text x="20" y="164" style="font-family:Consolas,monospace;font-size:13px;font-weight:500;fill:#25364d" >legal_postal_code</text>
-<text x="325" y="164" style="font-family:Consolas,monospace;font-size:12px;font-weight:500;fill:#66758a" >varchar(10) NOT NULL</text>
+<text x="275" y="164" style="font-family:Consolas,monospace;font-size:11px;font-weight:500;fill:#66758a" >varchar(10) NOT NULL</text>
 <line x1="14" y1="176" x2="441" y2="176" style="stroke:#e7edf5;stroke-width:1" />
 <text x="20" y="194" style="font-family:Consolas,monospace;font-size:13px;font-weight:500;fill:#25364d" >legal_city / street / house</text>
-<text x="325" y="194" style="font-family:Consolas,monospace;font-size:12px;font-weight:500;fill:#66758a" >varchar NOT NULL</text>
+<text x="275" y="194" style="font-family:Consolas,monospace;font-size:11px;font-weight:500;fill:#66758a" >varchar NOT NULL</text>
 <line x1="14" y1="206" x2="441" y2="206" style="stroke:#e7edf5;stroke-width:1" />
 <text x="20" y="224" style="font-family:Consolas,monospace;font-size:13px;font-weight:500;fill:#25364d" >bank_postal_code</text>
-<text x="325" y="224" style="font-family:Consolas,monospace;font-size:12px;font-weight:500;fill:#66758a" >varchar(10) NOT NULL</text>
+<text x="275" y="224" style="font-family:Consolas,monospace;font-size:11px;font-weight:500;fill:#66758a" >varchar(10) NOT NULL</text>
 <line x1="14" y1="236" x2="441" y2="236" style="stroke:#e7edf5;stroke-width:1" />
 <text x="20" y="254" style="font-family:Consolas,monospace;font-size:13px;font-weight:500;fill:#25364d" >bank_city / street / house</text>
-<text x="325" y="254" style="font-family:Consolas,monospace;font-size:12px;font-weight:500;fill:#66758a" >varchar NOT NULL</text>
+<text x="275" y="254" style="font-family:Consolas,monospace;font-size:11px;font-weight:500;fill:#66758a" >varchar NOT NULL</text>
 <line x1="14" y1="266" x2="441" y2="266" style="stroke:#e7edf5;stroke-width:1" />
 <text x="20" y="284" style="font-family:Consolas,monospace;font-size:13px;font-weight:500;fill:#25364d" >bank_account_number</text>
-<text x="325" y="284" style="font-family:Consolas,monospace;font-size:12px;font-weight:500;fill:#66758a" >varchar(30) NOT NULL</text>
+<text x="275" y="284" style="font-family:Consolas,monospace;font-size:11px;font-weight:500;fill:#66758a" >varchar(30) NOT NULL</text>
 </g>
 <g transform="translate(650 120)">
 <rect x="0" y="0" width="430" height="222" rx="12" ry="12" style="fill:#ffffff;stroke:#d7e2ef;stroke-width:1.6" />
@@ -49,19 +49,19 @@
 <text x="18" y="41" style="font-family:Arial,sans-serif;font-size:11px;font-weight:500;fill:#eaf2ff" >warehouse.materials</text>
 <text x="20" y="74" style="font-family:Consolas,monospace;font-size:13px;font-weight:500;fill:#25364d" >material_code</text>
 <rect x="220" y="62" width="26" height="16" rx="4" fill="#0f766e" /><text x="233" y="74" text-anchor="middle" style="font-family:Arial,sans-serif;font-size:9px;font-weight:700;fill:#ffffff">PK</text>
-<text x="325" y="74" style="font-family:Consolas,monospace;font-size:12px;font-weight:500;fill:#66758a" >varchar(20)</text>
+<text x="275" y="74" style="font-family:Consolas,monospace;font-size:11px;font-weight:500;fill:#66758a" >varchar(20)</text>
 <line x1="14" y1="86" x2="416" y2="86" style="stroke:#e7edf5;stroke-width:1" />
 <text x="20" y="104" style="font-family:Consolas,monospace;font-size:13px;font-weight:500;fill:#25364d" >material_class_code</text>
-<text x="325" y="104" style="font-family:Consolas,monospace;font-size:12px;font-weight:500;fill:#66758a" >varchar(20) NOT NULL</text>
+<text x="275" y="104" style="font-family:Consolas,monospace;font-size:11px;font-weight:500;fill:#66758a" >varchar(20) NOT NULL</text>
 <line x1="14" y1="116" x2="416" y2="116" style="stroke:#e7edf5;stroke-width:1" />
 <text x="20" y="134" style="font-family:Consolas,monospace;font-size:13px;font-weight:500;fill:#25364d" >material_group_code</text>
-<text x="325" y="134" style="font-family:Consolas,monospace;font-size:12px;font-weight:500;fill:#66758a" >varchar(20) NOT NULL</text>
+<text x="275" y="134" style="font-family:Consolas,monospace;font-size:11px;font-weight:500;fill:#66758a" >varchar(20) NOT NULL</text>
 <line x1="14" y1="146" x2="416" y2="146" style="stroke:#e7edf5;stroke-width:1" />
 <text x="20" y="164" style="font-family:Consolas,monospace;font-size:13px;font-weight:500;fill:#25364d" >material_name</text>
-<text x="325" y="164" style="font-family:Consolas,monospace;font-size:12px;font-weight:500;fill:#66758a" >varchar(200) NOT NULL</text>
+<text x="275" y="164" style="font-family:Consolas,monospace;font-size:11px;font-weight:500;fill:#66758a" >varchar(200) NOT NULL</text>
 <line x1="14" y1="176" x2="416" y2="176" style="stroke:#e7edf5;stroke-width:1" />
 <text x="20" y="194" style="font-family:Consolas,monospace;font-size:13px;font-weight:500;fill:#25364d" >material_account</text>
-<text x="325" y="194" style="font-family:Consolas,monospace;font-size:12px;font-weight:500;fill:#66758a" >varchar(30) NOT NULL</text>
+<text x="275" y="194" style="font-family:Consolas,monospace;font-size:11px;font-weight:500;fill:#66758a" >varchar(30) NOT NULL</text>
 </g>
 <g transform="translate(1280 135)">
 <rect x="0" y="0" width="430" height="142" rx="12" ry="12" style="fill:#ffffff;stroke:#d7e2ef;stroke-width:1.6" />
@@ -71,10 +71,10 @@
 <text x="18" y="41" style="font-family:Arial,sans-serif;font-size:11px;font-weight:500;fill:#eaf2ff" >warehouse.document_types</text>
 <text x="20" y="74" style="font-family:Consolas,monospace;font-size:13px;font-weight:500;fill:#25364d" >document_type_code</text>
 <rect x="220" y="62" width="26" height="16" rx="4" fill="#7c3aed" /><text x="233" y="74" text-anchor="middle" style="font-family:Arial,sans-serif;font-size:9px;font-weight:700;fill:#ffffff">PK</text>
-<text x="325" y="74" style="font-family:Consolas,monospace;font-size:12px;font-weight:500;fill:#66758a" >varchar(20)</text>
+<text x="275" y="74" style="font-family:Consolas,monospace;font-size:11px;font-weight:500;fill:#66758a" >varchar(20)</text>
 <line x1="14" y1="86" x2="416" y2="86" style="stroke:#e7edf5;stroke-width:1" />
 <text x="20" y="104" style="font-family:Consolas,monospace;font-size:13px;font-weight:500;fill:#25364d" >document_type_name</text>
-<text x="325" y="104" style="font-family:Consolas,monospace;font-size:12px;font-weight:500;fill:#66758a" >varchar(120) NOT NULL</text>
+<text x="275" y="104" style="font-family:Consolas,monospace;font-size:11px;font-weight:500;fill:#66758a" >varchar(120) NOT NULL</text>
 </g>
 <g transform="translate(670 435)">
 <rect x="0" y="0" width="430" height="166" rx="12" ry="12" style="fill:#ffffff;stroke:#d7e2ef;stroke-width:1.6" />
@@ -84,14 +84,14 @@
 <text x="18" y="41" style="font-family:Arial,sans-serif;font-size:11px;font-weight:500;fill:#eaf2ff" >warehouse.measurement_units</text>
 <text x="20" y="74" style="font-family:Consolas,monospace;font-size:13px;font-weight:500;fill:#25364d" >material_code</text>
 <rect x="220" y="62" width="34" height="16" rx="4" fill="#0891b2" /><text x="237" y="74" text-anchor="middle" style="font-family:Arial,sans-serif;font-size:9px;font-weight:700;fill:#ffffff">PK/FK</text>
-<text x="325" y="74" style="font-family:Consolas,monospace;font-size:12px;font-weight:500;fill:#66758a" >varchar(20)</text>
+<text x="275" y="74" style="font-family:Consolas,monospace;font-size:11px;font-weight:500;fill:#66758a" >varchar(20)</text>
 <line x1="14" y1="86" x2="416" y2="86" style="stroke:#e7edf5;stroke-width:1" />
 <text x="20" y="104" style="font-family:Consolas,monospace;font-size:13px;font-weight:500;fill:#25364d" >unit_code</text>
 <rect x="220" y="92" width="26" height="16" rx="4" fill="#0891b2" /><text x="233" y="104" text-anchor="middle" style="font-family:Arial,sans-serif;font-size:9px;font-weight:700;fill:#ffffff">PK</text>
-<text x="325" y="104" style="font-family:Consolas,monospace;font-size:12px;font-weight:500;fill:#66758a" >varchar(20)</text>
+<text x="275" y="104" style="font-family:Consolas,monospace;font-size:11px;font-weight:500;fill:#66758a" >varchar(20)</text>
 <line x1="14" y1="116" x2="416" y2="116" style="stroke:#e7edf5;stroke-width:1" />
 <text x="20" y="134" style="font-family:Consolas,monospace;font-size:13px;font-weight:500;fill:#25364d" >unit_name</text>
-<text x="325" y="134" style="font-family:Consolas,monospace;font-size:12px;font-weight:500;fill:#66758a" >varchar(80) NOT NULL</text>
+<text x="275" y="134" style="font-family:Consolas,monospace;font-size:11px;font-weight:500;fill:#66758a" >varchar(80) NOT NULL</text>
 </g>
 <g transform="translate(490 705)">
 <rect x="0" y="0" width="760" height="390" rx="12" ry="12" style="fill:#ffffff;stroke:#d7e2ef;stroke-width:1.6" />
@@ -145,30 +145,30 @@
 <text x="18" y="41" style="font-family:Arial,sans-serif;font-size:11px;font-weight:500;fill:#eaf2ff" >warehouse.shipments</text>
 <text x="20" y="74" style="font-family:Consolas,monospace;font-size:13px;font-weight:500;fill:#25364d" >shipment_number</text>
 <rect x="220" y="62" width="26" height="16" rx="4" fill="#ea580c" /><text x="233" y="74" text-anchor="middle" style="font-family:Arial,sans-serif;font-size:9px;font-weight:700;fill:#ffffff">PK</text>
-<text x="325" y="74" style="font-family:Consolas,monospace;font-size:12px;font-weight:500;fill:#66758a" >integer</text>
+<text x="270" y="74" style="font-family:Consolas,monospace;font-size:11px;font-weight:500;fill:#66758a" >integer</text>
 <line x1="14" y1="86" x2="496" y2="86" style="stroke:#e7edf5;stroke-width:1" />
 <text x="20" y="104" style="font-family:Consolas,monospace;font-size:13px;font-weight:500;fill:#25364d" >shipment_date</text>
-<text x="325" y="104" style="font-family:Consolas,monospace;font-size:12px;font-weight:500;fill:#66758a" >date NOT NULL</text>
+<text x="270" y="104" style="font-family:Consolas,monospace;font-size:11px;font-weight:500;fill:#66758a" >date NOT NULL</text>
 <line x1="14" y1="116" x2="496" y2="116" style="stroke:#e7edf5;stroke-width:1" />
 <text x="20" y="134" style="font-family:Consolas,monospace;font-size:13px;font-weight:500;fill:#25364d" >destination</text>
-<text x="325" y="134" style="font-family:Consolas,monospace;font-size:12px;font-weight:500;fill:#66758a" >varchar(200) NOT NULL</text>
+<text x="270" y="134" style="font-family:Consolas,monospace;font-size:11px;font-weight:500;fill:#66758a" >varchar(200) NOT NULL</text>
 <line x1="14" y1="146" x2="496" y2="146" style="stroke:#e7edf5;stroke-width:1" />
 <text x="20" y="164" style="font-family:Consolas,monospace;font-size:13px;font-weight:500;fill:#25364d" >material_code</text>
 <rect x="220" y="152" width="26" height="16" rx="4" fill="#64748b" /><text x="233" y="164" text-anchor="middle" style="font-family:Arial,sans-serif;font-size:9px;font-weight:700;fill:#ffffff">FK</text>
-<text x="325" y="164" style="font-family:Consolas,monospace;font-size:12px;font-weight:500;fill:#66758a" >varchar(20) -&gt; materials</text>
+<text x="270" y="164" style="font-family:Consolas,monospace;font-size:11px;font-weight:500;fill:#66758a" >varchar(20) -&gt; materials</text>
 <line x1="14" y1="176" x2="496" y2="176" style="stroke:#e7edf5;stroke-width:1" />
 <text x="20" y="194" style="font-family:Consolas,monospace;font-size:13px;font-weight:500;fill:#25364d" >unit_code</text>
 <rect x="220" y="182" width="26" height="16" rx="4" fill="#64748b" /><text x="233" y="194" text-anchor="middle" style="font-family:Arial,sans-serif;font-size:9px;font-weight:700;fill:#ffffff">FK</text>
-<text x="325" y="194" style="font-family:Consolas,monospace;font-size:12px;font-weight:500;fill:#66758a" >composite FK -&gt; measurement_units</text>
+<text x="270" y="194" style="font-family:Consolas,monospace;font-size:11px;font-weight:500;fill:#66758a" >composite FK -&gt; measurement_units</text>
 <line x1="14" y1="206" x2="496" y2="206" style="stroke:#e7edf5;stroke-width:1" />
 <text x="20" y="224" style="font-family:Consolas,monospace;font-size:13px;font-weight:500;fill:#25364d" >quantity</text>
-<text x="325" y="224" style="font-family:Consolas,monospace;font-size:12px;font-weight:500;fill:#66758a" >numeric(18,3), CHECK &gt; 0</text>
+<text x="270" y="224" style="font-family:Consolas,monospace;font-size:11px;font-weight:500;fill:#66758a" >numeric(18,3), CHECK &gt; 0</text>
 <line x1="14" y1="236" x2="496" y2="236" style="stroke:#e7edf5;stroke-width:1" />
 <text x="20" y="254" style="font-family:Consolas,monospace;font-size:13px;font-weight:500;fill:#25364d" >document_number</text>
-<text x="325" y="254" style="font-family:Consolas,monospace;font-size:12px;font-weight:500;fill:#66758a" >varchar(50) NOT NULL</text>
+<text x="270" y="254" style="font-family:Consolas,monospace;font-size:11px;font-weight:500;fill:#66758a" >varchar(50) NOT NULL</text>
 <line x1="14" y1="266" x2="496" y2="266" style="stroke:#e7edf5;stroke-width:1" />
 <text x="20" y="284" style="font-family:Consolas,monospace;font-size:13px;font-weight:500;fill:#25364d" >comment</text>
-<text x="325" y="284" style="font-family:Consolas,monospace;font-size:12px;font-weight:500;fill:#66758a" >varchar(300) DEFAULT &#x27;&#x27;</text>
+<text x="270" y="284" style="font-family:Consolas,monospace;font-size:11px;font-weight:500;fill:#66758a" >varchar(300) DEFAULT &#x27;&#x27;</text>
 </g>
 <g transform="translate(1320 910)">
 <rect x="0" y="0" width="500" height="190" rx="16" ry="16" style="fill:#ffffff;stroke:#94a3b8;stroke-width:1.8;stroke-dasharray:8 7" />
@@ -192,21 +192,21 @@
 <text x="340" y="662" style="font-family:Arial,sans-serif;font-size:12px;font-weight:600;fill:#587089" >supplier_code</text>
 <path d="M865 342 L865 435" style="stroke:#587089;stroke-width:2.3;fill:none;marker-end:url(#arrow);stroke-linecap:round;stroke-linejoin:round" />
 <text x="884" y="395" style="font-family:Arial,sans-serif;font-size:12px;font-weight:600;fill:#587089" >material_code</text>
-<path d="M990 342 L990 650 L980 650 L980 705" style="stroke:#587089;stroke-width:2.3;fill:none;marker-end:url(#arrow);stroke-linecap:round;stroke-linejoin:round" />
+<path d="M990 342 L1130 342 L1130 650 L980 650 L980 705" style="stroke:#587089;stroke-width:2.3;fill:none;marker-end:url(#arrow);stroke-linecap:round;stroke-linejoin:round" />
 <text x="1010" y="628" style="font-family:Arial,sans-serif;font-size:12px;font-weight:600;fill:#587089" >material_code</text>
 <path d="M885 601 L885 705" style="stroke:#587089;stroke-width:2.3;fill:none;marker-end:url(#arrow);stroke-linecap:round;stroke-linejoin:round" />
-<text x="902" y="676" style="font-family:Arial,sans-serif;font-size:12px;font-weight:600;fill:#587089" >material_code + unit_code</text>
+<text x="700" y="676" style="font-family:Arial,sans-serif;font-size:12px;font-weight:600;fill:#587089" >material_code + unit_code</text>
 <path d="M1495 277 L1495 500 L1145 500 L1145 705" style="stroke:#587089;stroke-width:2.3;fill:none;marker-end:url(#arrow);stroke-linecap:round;stroke-linejoin:round" />
 <text x="1224" y="487" style="font-family:Arial,sans-serif;font-size:12px;font-weight:600;fill:#587089" >document_type_code</text>
 <path d="M1040 342 L1220 342 L1220 640 L1340 640" style="stroke:#587089;stroke-width:2.3;fill:none;marker-end:url(#arrow);stroke-linecap:round;stroke-linejoin:round" />
-<text x="1240" y="624" style="font-family:Arial,sans-serif;font-size:12px;font-weight:600;fill:#587089" >material_code</text>
+<text x="1240" y="608" style="font-family:Arial,sans-serif;font-size:12px;font-weight:600;fill:#587089" >material_code</text>
 <path d="M1100 535 L1305 535 L1305 700 L1340 700" style="stroke:#587089;stroke-width:2.3;fill:none;marker-end:url(#arrow);stroke-linecap:round;stroke-linejoin:round" />
 <text x="1150" y="522" style="font-family:Arial,sans-serif;font-size:12px;font-weight:600;fill:#587089" >material_code + unit_code</text>
 <text x="260" y="520" style="font-family:Arial,sans-serif;font-size:12px;font-weight:600;fill:#587089" >1</text>
 <text x="612" y="694" style="font-family:Arial,sans-serif;font-size:12px;font-weight:600;fill:#587089" >0..N</text>
 <text x="875" y="366" style="font-family:Arial,sans-serif;font-size:12px;font-weight:600;fill:#587089" >1</text>
 <text x="875" y="425" style="font-family:Arial,sans-serif;font-size:12px;font-weight:600;fill:#587089" >0..N</text>
-<text x="1002" y="366" style="font-family:Arial,sans-serif;font-size:12px;font-weight:600;fill:#587089" >1</text>
+<text x="1110" y="366" style="font-family:Arial,sans-serif;font-size:12px;font-weight:600;fill:#587089" >1</text>
 <text x="990" y="694" style="font-family:Arial,sans-serif;font-size:12px;font-weight:600;fill:#587089" >0..N</text>
 <text x="895" y="624" style="font-family:Arial,sans-serif;font-size:12px;font-weight:600;fill:#587089" >1</text>
 <text x="895" y="694" style="font-family:Arial,sans-serif;font-size:12px;font-weight:600;fill:#587089" >0..N</text>

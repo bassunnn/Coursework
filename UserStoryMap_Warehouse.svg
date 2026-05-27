@@ -1,0 +1,237 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1050" viewBox="0 0 1800 1050">
+  <defs>
+    <style>
+      .bg { fill: #050607; }
+      .title { font-family: Arial, sans-serif; font-size: 28px; font-weight: 700; fill: #f5f7fb; }
+      .col-title { font-family: Arial, sans-serif; font-size: 22px; font-weight: 700; fill: #f5f7fb; text-anchor: middle; }
+      .lane-title { font-family: Arial, sans-serif; font-size: 15px; font-weight: 700; fill: #f5f7fb; text-anchor: middle; }
+      .lane-note { font-family: Arial, sans-serif; font-size: 12px; font-weight: 600; fill: #d8dee9; text-anchor: middle; }
+      .card-text { font-family: Arial, sans-serif; font-size: 15px; font-weight: 700; fill: #d9fff4; text-anchor: middle; }
+      .card-text-red { font-family: Arial, sans-serif; font-size: 15px; font-weight: 700; fill: #ffe3e3; text-anchor: middle; }
+      .card-text-gray { font-family: Arial, sans-serif; font-size: 15px; font-weight: 700; fill: #f2f2ed; text-anchor: middle; }
+      .legend { font-family: Arial, sans-serif; font-size: 12px; font-weight: 600; fill: #f5f7fb; }
+      .mvp-pill { fill: #10b981; }
+      .role-red { fill: #4d1719; stroke: #ef4444; stroke-width: 2; }
+      .role-green { fill: #063d35; stroke: #10b981; stroke-width: 2; }
+      .role-admin { fill: #123654; stroke: #38bdf8; stroke-width: 2; }
+      .card-green { fill: #063d35; stroke: #10b981; stroke-width: 2; }
+      .card-red { fill: #6b2424; stroke: #f87171; stroke-width: 2; }
+      .card-blue { fill: #123654; stroke: #38bdf8; stroke-width: 2; }
+      .card-gray { fill: #595854; stroke: #d6d3ca; stroke-width: 2; }
+      .connector { fill: #10b981; }
+      .connector-red { fill: #f87171; }
+      .connector-blue { fill: #38bdf8; }
+      .connector-gray { fill: #d6d3ca; }
+      .divider { stroke: #1f2937; stroke-width: 1.2; stroke-dasharray: 8 10; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1800" height="1050" class="bg" />
+  <text x="42" y="52" class="title">User Story Map: информационная система "Складской учет материалов"</text>
+
+  <!-- MVP marker -->
+  <rect x="42" y="88" width="92" height="40" rx="7" class="mvp-pill" />
+  <text x="88" y="114" class="lane-title">MVP</text>
+
+  <!-- Role cards -->
+  <g transform="translate(20 160)">
+    <rect x="0" y="0" width="150" height="82" rx="6" class="role-red" />
+    <text x="75" y="37" class="lane-title">Новичок</text>
+    <text x="75" y="58" class="lane-note">регистрация</text>
+  </g>
+
+  <g transform="translate(20 390)">
+    <rect x="0" y="0" width="150" height="82" rx="6" class="role-green" />
+    <text x="75" y="37" class="lane-title">Сотрудник</text>
+    <text x="75" y="58" class="lane-note">склада</text>
+  </g>
+
+  <g transform="translate(20 620)">
+    <rect x="0" y="0" width="150" height="82" rx="6" class="role-admin" />
+    <text x="75" y="37" class="lane-title">Администратор</text>
+    <text x="75" y="58" class="lane-note">управление</text>
+  </g>
+
+  <!-- Column titles -->
+  <text x="260" y="112" class="col-title">Регистрация</text>
+  <text x="520" y="112" class="col-title">Справочники</text>
+  <text x="780" y="112" class="col-title">Приход</text>
+  <text x="1040" y="112" class="col-title">Расход</text>
+  <text x="1300" y="112" class="col-title">Отчеты</text>
+  <text x="1560" y="112" class="col-title">Авт. / Выход</text>
+
+  <!-- Newbie / MVP registration -->
+  <g transform="translate(190 150)">
+    <rect x="0" y="0" width="210" height="66" rx="7" class="card-red" />
+    <text x="105" y="40" class="card-text-red">Регистрация</text>
+    <rect x="197" y="54" width="18" height="18" rx="2" class="connector-red" />
+  </g>
+
+  <g transform="translate(1455 150)">
+    <rect x="0" y="0" width="230" height="66" rx="7" class="card-red" />
+    <text x="115" y="40" class="card-text-red">Вход по email</text>
+    <rect x="217" y="54" width="18" height="18" rx="2" class="connector-red" />
+  </g>
+
+  <!-- Employee stories -->
+  <g transform="translate(440 300)">
+    <rect x="0" y="0" width="230" height="66" rx="7" class="card-green" />
+    <text x="115" y="40" class="card-text">Поиск материалов</text>
+    <rect x="217" y="54" width="18" height="18" rx="2" class="connector" />
+  </g>
+  <g transform="translate(440 382)">
+    <rect x="0" y="0" width="230" height="66" rx="7" class="card-green" />
+    <text x="115" y="40" class="card-text">Фильтрация</text>
+    <rect x="217" y="54" width="18" height="18" rx="2" class="connector" />
+  </g>
+  <g transform="translate(440 464)">
+    <rect x="0" y="0" width="230" height="66" rx="7" class="card-green" />
+    <text x="115" y="40" class="card-text">Карточка материала</text>
+    <rect x="217" y="54" width="18" height="18" rx="2" class="connector" />
+  </g>
+  <g transform="translate(440 546)">
+    <rect x="0" y="0" width="230" height="66" rx="7" class="card-green" />
+    <text x="115" y="40" class="card-text">Поставщики</text>
+    <rect x="217" y="54" width="18" height="18" rx="2" class="connector" />
+  </g>
+
+  <g transform="translate(700 300)">
+    <rect x="0" y="0" width="230" height="66" rx="7" class="card-green" />
+    <text x="115" y="40" class="card-text">Добавить приход</text>
+    <rect x="217" y="54" width="18" height="18" rx="2" class="connector" />
+  </g>
+  <g transform="translate(700 382)">
+    <rect x="0" y="0" width="230" height="66" rx="7" class="card-green" />
+    <text x="115" y="40" class="card-text">Список прихода</text>
+    <rect x="217" y="54" width="18" height="18" rx="2" class="connector" />
+  </g>
+  <g transform="translate(700 464)">
+    <rect x="0" y="0" width="230" height="66" rx="7" class="card-green" />
+    <text x="115" y="40" class="card-text">Поиск прихода</text>
+    <rect x="217" y="54" width="18" height="18" rx="2" class="connector" />
+  </g>
+  <g transform="translate(700 546)">
+    <rect x="0" y="0" width="230" height="66" rx="7" class="card-green" />
+    <text x="115" y="40" class="card-text">Расчет суммы</text>
+    <rect x="217" y="54" width="18" height="18" rx="2" class="connector" />
+  </g>
+
+  <g transform="translate(960 300)">
+    <rect x="0" y="0" width="230" height="66" rx="7" class="card-green" />
+    <text x="115" y="40" class="card-text">Добавить расход</text>
+    <rect x="217" y="54" width="18" height="18" rx="2" class="connector" />
+  </g>
+  <g transform="translate(960 382)">
+    <rect x="0" y="0" width="230" height="66" rx="7" class="card-green" />
+    <text x="115" y="40" class="card-text">Список расхода</text>
+    <rect x="217" y="54" width="18" height="18" rx="2" class="connector" />
+  </g>
+  <g transform="translate(960 464)">
+    <rect x="0" y="0" width="230" height="66" rx="7" class="card-green" />
+    <text x="115" y="40" class="card-text">Проверка остатков</text>
+    <rect x="217" y="54" width="18" height="18" rx="2" class="connector" />
+  </g>
+
+  <g transform="translate(1220 300)">
+    <rect x="0" y="0" width="230" height="66" rx="7" class="card-green" />
+    <text x="115" y="40" class="card-text">Сводка склада</text>
+    <rect x="217" y="54" width="18" height="18" rx="2" class="connector" />
+  </g>
+  <g transform="translate(1220 382)">
+    <rect x="0" y="0" width="230" height="66" rx="7" class="card-green" />
+    <text x="115" y="34" class="card-text">Поставщики</text>
+    <text x="115" y="53" class="card-text">материала</text>
+    <rect x="217" y="54" width="18" height="18" rx="2" class="connector" />
+  </g>
+  <g transform="translate(1220 464)">
+    <rect x="0" y="0" width="230" height="66" rx="7" class="card-green" />
+    <text x="115" y="40" class="card-text">Кол-во поставщиков</text>
+    <rect x="217" y="54" width="18" height="18" rx="2" class="connector" />
+  </g>
+  <g transform="translate(1220 546)">
+    <rect x="0" y="0" width="230" height="66" rx="7" class="card-green" />
+    <text x="115" y="40" class="card-text">Адрес банка</text>
+    <rect x="217" y="54" width="18" height="18" rx="2" class="connector" />
+  </g>
+
+  <g transform="translate(1455 300)">
+    <rect x="0" y="0" width="230" height="66" rx="7" class="card-green" />
+    <text x="115" y="40" class="card-text">Выход из акк.</text>
+    <rect x="217" y="54" width="18" height="18" rx="2" class="connector" />
+  </g>
+  <g transform="translate(1455 382)">
+    <rect x="0" y="0" width="230" height="66" rx="7" class="card-green" />
+    <text x="115" y="40" class="card-text">Темная тема</text>
+    <rect x="217" y="54" width="18" height="18" rx="2" class="connector" />
+  </g>
+  <g transform="translate(1455 464)">
+    <rect x="0" y="0" width="230" height="66" rx="7" class="card-green" />
+    <text x="115" y="40" class="card-text">Сохранить токен</text>
+    <rect x="217" y="54" width="18" height="18" rx="2" class="connector" />
+  </g>
+
+  <!-- Admin stories -->
+  <g transform="translate(700 650)">
+    <rect x="0" y="0" width="230" height="66" rx="7" class="card-blue" />
+    <text x="115" y="34" class="card-text">Просмотр</text>
+    <text x="115" y="53" class="card-text">пользователей</text>
+    <rect x="217" y="54" width="18" height="18" rx="2" class="connector-blue" />
+  </g>
+  <g transform="translate(960 650)">
+    <rect x="0" y="0" width="230" height="66" rx="7" class="card-blue" />
+    <text x="115" y="34" class="card-text">Создать</text>
+    <text x="115" y="53" class="card-text">пользователя</text>
+    <rect x="217" y="54" width="18" height="18" rx="2" class="connector-blue" />
+  </g>
+  <g transform="translate(1220 650)">
+    <rect x="0" y="0" width="230" height="66" rx="7" class="card-blue" />
+    <text x="115" y="34" class="card-text">Удалить</text>
+    <text x="115" y="53" class="card-text">сотрудника</text>
+    <rect x="217" y="54" width="18" height="18" rx="2" class="connector-blue" />
+  </g>
+  <g transform="translate(1455 650)">
+    <rect x="0" y="0" width="230" height="66" rx="7" class="card-blue" />
+    <text x="115" y="34" class="card-text">Коды</text>
+    <text x="115" y="53" class="card-text">приглашения</text>
+    <rect x="217" y="54" width="18" height="18" rx="2" class="connector-blue" />
+  </g>
+
+  <!-- Not MVP backlog -->
+  <line x1="190" y1="802" x2="1685" y2="802" class="divider" />
+  <g transform="translate(190 850)">
+    <rect x="0" y="0" width="230" height="66" rx="7" class="card-gray" />
+    <text x="115" y="40" class="card-text-gray">Подтвержд. почты</text>
+  </g>
+  <g transform="translate(440 850)">
+    <rect x="0" y="0" width="230" height="66" rx="7" class="card-gray" />
+    <text x="115" y="40" class="card-text-gray">Импорт справочн.</text>
+  </g>
+  <g transform="translate(700 850)">
+    <rect x="0" y="0" width="230" height="66" rx="7" class="card-gray" />
+    <text x="115" y="40" class="card-text-gray">Инвентаризация</text>
+  </g>
+  <g transform="translate(960 850)">
+    <rect x="0" y="0" width="230" height="66" rx="7" class="card-gray" />
+    <text x="115" y="40" class="card-text-gray">Возврат расхода</text>
+  </g>
+  <g transform="translate(1220 850)">
+    <rect x="0" y="0" width="230" height="66" rx="7" class="card-gray" />
+    <text x="115" y="40" class="card-text-gray">Печать отчетов</text>
+  </g>
+  <g transform="translate(1455 850)">
+    <rect x="0" y="0" width="230" height="66" rx="7" class="card-gray" />
+    <text x="115" y="40" class="card-text-gray">OAuth / SSO</text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(220 980)">
+    <rect x="0" y="0" width="22" height="22" rx="3" class="connector" />
+    <text x="38" y="16" class="legend">входит в MVP</text>
+    <rect x="260" y="0" width="22" height="22" rx="3" class="connector-red" />
+    <text x="298" y="16" class="legend">новичок</text>
+    <rect x="470" y="0" width="22" height="22" rx="3" class="connector-blue" />
+    <text x="508" y="16" class="legend">администратор</text>
+    <rect x="735" y="0" width="22" height="22" rx="3" class="connector-gray" />
+    <text x="773" y="16" class="legend">не входит в MVP</text>
+  </g>
+</svg>
